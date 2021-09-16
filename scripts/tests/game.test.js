@@ -75,6 +75,14 @@ describe("newGame function works correctly", () => {
     test("should display 0 for element with id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
     });
+    test("data-listener attribute should be set to true on each circle", () => {
+        const elements = document.getElementsByClassName("circle");
+        // loop through to check data-listener attribute = true
+        for(let element of elements) {
+            expect(element.getAttribute("data-listener")).toEqual("true");
+        }
+        expect(document.getElementById("score").innerText).toEqual(0);
+    });
 });
 
 // tests for lightsUp function

@@ -11,6 +11,21 @@ function newGame() {
     game.score = 0;
     game.playerMoves = [];
     game.currentGame = [];
+    // check if el has data-listener of true, if not then add event listener
+    // on click, call lightsOn function, passing the element id
+    // add the el id to the playerMoves array
+    for(let circle of document.getElementsByClassName("circle")) {
+        if (circle.getAttribute("data-listener") !== "true") {
+            circle.addEventListener("click", (e) => {
+                let move = e.target.getAttribute("id");
+                lightsOn(move);
+                game.playerMoves.push(move);
+                playerTurn();
+            });
+            // finally set the data-listener to true after event listener added
+            circle.setAttribute("data-listener", "true");
+        }
+    }
     showScore();
     addTurn();
 }
