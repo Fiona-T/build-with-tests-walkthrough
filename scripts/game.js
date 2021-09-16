@@ -6,6 +6,16 @@ let game = {
     choices: ["button1", "button2", "button3", "button4"],
 }
 
+function newGame() {
+    game.score = 0;
+    game.playerMoves = [];
+    game.currentGame = [];
+    showScore();
+}
+
+function showScore() {
+    document.getElementById("score").innerText = game.score;
+}
 
 // export so that can use in test file
-module.exports = { game };
+module.exports = { game, newGame, showScore };
