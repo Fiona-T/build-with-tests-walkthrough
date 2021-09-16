@@ -3,7 +3,7 @@
  */
 
 // the js file with the game code
-const { game, newGame, showScore } = require("../game");
+const { game, newGame, showScore, addTurn } = require("../game");
 
 // below were added automatically??
 // const { test, expect } = require("@jest/globals");
@@ -62,8 +62,11 @@ describe("newGame function works correctly", () => {
     // test("should set the currentGame to empty array", () => {
     //     expect(game.currentGame).toEqual([]);
     // });
-    test("should clear the computer sequence array", () => {
-        expect(game.currentGame.length).toBe(0);
+    // test("should clear the computer sequence array", () => {
+    //     expect(game.currentGame.length).toBe(0);
+    // });
+    test("should be one element in the computer sequence array", () => {
+        expect(game.currentGame.length).toBe(1);
     });
     test("should display 0 for element with id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);

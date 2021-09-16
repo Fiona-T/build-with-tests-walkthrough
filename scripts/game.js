@@ -11,6 +11,15 @@ function newGame() {
     game.playerMoves = [];
     game.currentGame = [];
     showScore();
+    addTurn();
+}
+
+function addTurn() {
+    game.playerMoves = [];
+    // get random selection from choices array, push this to currentGame array
+    // using random number between 0 and 3, using that as index number from choices array
+    game.currentGame.push(game.choices[(Math.floor(Math.random() * 4))]);
+    // showTurns();
 }
 
 function showScore() {
@@ -18,4 +27,4 @@ function showScore() {
 }
 
 // export so that can use in test file
-module.exports = { game, newGame, showScore };
+module.exports = { game, newGame, showScore, addTurn };
