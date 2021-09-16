@@ -4,7 +4,7 @@
 
 // the js file with the game code
 const { beforeEach, test, expect } = require("@jest/globals");
-const { game, newGame, showScore, addTurn, lightsOn } = require("../game");
+const { game, newGame, showScore, addTurn, lightsOn, showTurns } = require("../game");
 
 // below were added automatically??
 // const { test, expect } = require("@jest/globals");
@@ -37,6 +37,9 @@ describe("game object contains correct keys", () => {
     });
     test("choices contains correct ids", () => {
         expect(game.choices).toEqual(["button1", "button2", "button3", "button4"]);
+    });
+    test("turnNumber key exists", () => {
+        expect("turnNumber" in game).toBe(true);
     });
 });
 
@@ -98,5 +101,10 @@ describe("gameplay works correctly", () => {
         lightsOn(game.currentGame[0]);
         // expect it to have the class attached
         expect(button.classList).toContain("light");
+    });
+    test("showTurns should update game.turnNumber", () => {
+        game.turnNumber = 42;
+        showTurns();
+        expect(game.turnNumber).toBe(0);
     });
 });
