@@ -3,7 +3,8 @@
  */
 
 // the js file with the game code
-const { game, newGame, showScore, addTurn } = require("../game");
+const { beforeEach, test, expect } = require("@jest/globals");
+const { game, newGame, showScore, addTurn, lightsOn } = require("../game");
 
 // below were added automatically??
 // const { test, expect } = require("@jest/globals");
@@ -70,5 +71,32 @@ describe("newGame function works correctly", () => {
     });
     test("should display 0 for element with id of score", () => {
         expect(document.getElementById("score").innerText).toEqual(0);
+    });
+});
+
+// tests for lightsUp function
+describe("gameplay works correctly", () => {
+    beforeEach(() => {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoves = [];
+        addTurn();
+    });
+    afterEach(() => {
+        game.score = 0;
+        game.currentGame = [];
+        game.playerMoves = [];
+    });
+    test("addTurn adds a new turn to the game", () => {
+        addTurn();
+        expect(game.currentGame.length).toBe(2);
+    });
+    test("should add correct class to light up the buttons", () => {
+        // there will always be at least one el in currentGame array, get the 1st one
+        let button = document.getElementById(game.currentGame[0]);
+        // call lightsOn function using that element
+        lightsOn(game.currentGame[0]);
+        // expect it to have the class attached
+        expect(button.classList).toContain("light");
     });
 });

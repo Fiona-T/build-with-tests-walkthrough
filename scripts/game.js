@@ -26,5 +26,13 @@ function showScore() {
     document.getElementById("score").innerText = game.score;
 }
 
+// add class to element then remove after 400ms
+function lightsOn(circ) {
+    document.getElementById(circ).classList.add("light");
+    setTimeout(() => {
+        document.getElementById(circ).classList.remove("light");
+    }, 400);
+}
+
 // export so that can use in test file
-module.exports = { game, newGame, showScore, addTurn };
+module.exports = { game, newGame, showScore, addTurn, lightsOn };
