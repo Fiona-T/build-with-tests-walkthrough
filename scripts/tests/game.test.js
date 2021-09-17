@@ -4,13 +4,16 @@
 
 // the js file with the game code
 const { beforeEach, test, expect } = require("@jest/globals");
-const { game, newGame, showScore, addTurn, lightsOn, showTurns } = require("../game");
+const { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn } = require("../game");
 
 // below were added automatically??
 // const { test, expect } = require("@jest/globals");
 // const { describe } = require("yargs");
 // const { test, expect, beforeAll } = require("@jest/globals");
 // const { describe } = require("yargs");
+
+// spy on alert being called on window, alert is displayed for a wrong move
+jest.spyOn(window, "alert").mockImplementation(() => { });
 
 // to load index.html into jest mock DOM
 beforeAll(() => {
@@ -114,5 +117,19 @@ describe("gameplay works correctly", () => {
         game.turnNumber = 42;
         showTurns();
         expect(game.turnNumber).toBe(0);
+    });
+    test("should increment the score if the turn is correct", () => {
+        // beforeEach adds a turn, which pushes to the currentGame array
+        // below we are pushing that item into the playerMoves array, this means both will match
+        // which simulates a correct move
+        game.playerMoves.push(game.currentGame[0]);
+        playerTurn();
+        expect(game.score).toBe(1);
+    });
+    test("should call an alert if the move is wrong", () => {
+        // push an incorrect move i.e. string "wrong" into the playerMoves array
+        game.playerMoves.push("wrong");
+        playerTurn();
+        expect(window.alert).toBeCalledWith("Wrong move!");
     });
 });

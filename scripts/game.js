@@ -62,5 +62,22 @@ function showTurns() {
     }, 800);
 }
 
+function playerTurn() {
+    // length of playerMoves array minus one = index of last element
+    let i = game.playerMoves.length - 1;
+    // compare this with same index in currentGame array - if answer is correct they will match
+    if (game.currentGame[i] === game.playerMoves[i]) {
+        // if length of both arrays match, then we are at the end of the game, increment score
+        if (game.currentGame.length === game.playerMoves.length) {
+            game.score ++;
+            showScore();
+            addTurn();
+        }
+    } else {
+        alert("Wrong move!");
+        newGame();
+    }
+}
+
 // export so that can use in test file
-module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns };
+module.exports = { game, newGame, showScore, addTurn, lightsOn, showTurns, playerTurn };
