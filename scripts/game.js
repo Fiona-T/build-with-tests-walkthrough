@@ -5,6 +5,8 @@ let game = {
     playerMoves: [],
     choices: ["button1", "button2", "button3", "button4"],
     turnNumber: 0,
+    lastButton: "",
+    turnInProgress: false,
 }
 
 function newGame() {
@@ -17,10 +19,16 @@ function newGame() {
     for(let circle of document.getElementsByClassName("circle")) {
         if (circle.getAttribute("data-listener") !== "true") {
             circle.addEventListener("click", (e) => {
-                let move = e.target.getAttribute("id");
-                lightsOn(move);
-                game.playerMoves.push(move);
-                playerTurn();
+                // check currentGame array length, to check if game in play, 
+                // and turnInProg is false - no click allowed when computer showing its sequence
+                if (game.currentGame.length > 0 && !game.turnInProgress) {
+                    let move = e.target.getAttribute("id");
+                    // set lastButton value to the id of the button clicked
+                    game.lastButton = move;
+                    lightsOn(move);
+                    game.playerMoves.push(move);
+                    playerTurn();
+                }
             });
             // finally set the data-listener to true after event listener added
             circle.setAttribute("data-listener", "true");
@@ -51,6 +59,8 @@ function lightsOn(circ) {
 }
 
 function showTurns() {
+    // turnInProgress true while computer shows sequence, set to false after
+    game.turnInProgress = true;
     game.turnNumber = 0; 
     let turns = setInterval(() => {
         // lightsOn with interval, so gap between each step in sequence
@@ -58,6 +68,7 @@ function showTurns() {
         game.turnNumber++;
         if(game.turnNumber >= game.currentGame.length) {
             clearInterval(turns);
+            game.turnInProgress = false;
         }
     }, 800);
 }

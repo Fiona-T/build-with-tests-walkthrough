@@ -44,6 +44,15 @@ describe("game object contains correct keys", () => {
     test("turnNumber key exists", () => {
         expect("turnNumber" in game).toBe(true);
     });
+    test("lastButton key exists", () => {
+        expect("lastButton" in game).toBe(true);
+    });
+    test("turnInProgress key exists", () => {
+        expect("turnInProgress" in game).toBe(true);
+    });
+    test("turnInProgress key value is false", () => {
+        expect(game.turnInProgress).toBe(false);
+    });
 });
 
 // tests for newGame function
@@ -88,7 +97,7 @@ describe("newGame function works correctly", () => {
     });
 });
 
-// tests for lightsUp function
+// tests for functions called during game
 describe("gameplay works correctly", () => {
     beforeEach(() => {
         game.score = 0;
@@ -131,5 +140,16 @@ describe("gameplay works correctly", () => {
         game.playerMoves.push("wrong");
         playerTurn();
         expect(window.alert).toBeCalledWith("Wrong move!");
+    });
+    test("turnInProgress property should be true during showTurn", () => {
+        game.turnInProgress = false;
+        showTurns();
+        expect(game.turnInProgress).toBe(true);
+    });
+    test("clicking during computer sequence should fail", () => {
+        showTurns(); // start computer sequence
+        game.lastButton = ""; // clear any value from this
+        document.getElementById("button2").click(); // call click function
+        expect(game.lastButton).toEqual(""); // should still be empty as click function did not add id
     });
 });
